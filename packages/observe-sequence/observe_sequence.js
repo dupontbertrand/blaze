@@ -155,14 +155,21 @@ ObserveSequence = {
           callbacks.beforeDiff(lastSeqArray, seqArray);
         }
 
-        diffArray(lastSeqArray, seqArray, callbacks);
+        try {
+          diffArray(lastSeqArray, seqArray, callbacks);
 
-        if (callbacks.afterDiff) {
-          callbacks.afterDiff();
+          // Only record the new baseline once the diff has fully applied.
+          // If a diff callback throws, the DOM no longer matches seqArray,
+          // so the last consistent baseline is kept for the next diff.
+          lastSeq = seq;
+          lastSeqArray = seqArray;
+        } finally {
+          // Always run afterDiff, even if a diff callback threw, so item
+          // views are never left permanently frozen. See meteor/blaze#468.
+          if (callbacks.afterDiff) {
+            callbacks.afterDiff();
+          }
         }
-
-        lastSeq = seq;
-        lastSeqArray = seqArray;
       });
     });
 
