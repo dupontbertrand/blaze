@@ -5,7 +5,7 @@ description: Render Blaze templates to HTML strings on the server for SEO, socia
 
 # Server Rendering with Blaze
 
-Starting from Blaze 3.1.x, compiled templates are available both on the client and on the server. This enables rendering templates to HTML strings from Node.js — useful for SEO, social link previews, and pre-rendering static or dynamic pages.
+Compiled Blaze templates are available both on the client and on the server. This enables rendering templates to HTML strings from Node.js — useful for SEO, social link previews, and pre-rendering static or dynamic pages.
 
 ## The basics
 
@@ -115,9 +115,9 @@ onPageLoad((sink) => {
 });
 ```
 
-## What's new in 3.1.x
+## What's new
 
-Prior to this version, Blaze templates only compiled for the client, and the `Template` registry was not exported to the server. Server-side rendering was possible only through third-party packages (now unmaintained).
+Previously, Blaze templates only compiled for the client, and the `Template` registry was not exported to the server. Server-side rendering was possible only through third-party packages (now unmaintained).
 
 The changes are backward-compatible: existing client-side Blaze apps continue to work identically. The server-side additions are opt-in — if you don't import `.html` files from your server entry point, nothing changes.
 
