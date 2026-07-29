@@ -49,7 +49,7 @@ Server-rendered templates should be written as pure render functions against exp
 
 ## Using server rendering for SSG/SSR
 
-The [`static-render` package](../packages/static-render) provides a higher-level API for pre-rendering routes at server startup (SSG) or at each request (SSR), integrating with `flow-router-extra` and the Meteor boilerplate pipeline.
+The [`static-render` package](https://v3-docs.meteor.com/packages/static-render) provides a higher-level API for pre-rendering routes at server startup (SSG) or at each request (SSR), integrating with `flow-router-extra` and the Meteor boilerplate pipeline.
 
 ### SSG — Static Site Generation
 
@@ -99,7 +99,7 @@ When a user edits the product description and saves it, refreshing the page show
 | Use case | About, pricing, terms | Products, articles, profiles |
 | Data source | Hardcoded or DB at startup | MongoDB at request time |
 
-See the [static-render package docs](../packages/static-render) for full API reference including parameterized SSG routes (`staticPaths`), cache invalidation, and graceful error handling.
+See the [static-render package docs](https://v3-docs.meteor.com/packages/static-render) for full API reference including parameterized SSG routes (`staticPaths`), cache invalidation, and graceful error handling.
 
 ## Manual rendering (without static-render)
 
