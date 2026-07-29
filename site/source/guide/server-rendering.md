@@ -75,7 +75,11 @@ onPageLoad((sink) => {
 
 Previously, Blaze templates only compiled for the client, and the `Template` registry was not exported to the server. Server-side rendering was possible only through third-party packages (now unmaintained).
 
-The changes are backward-compatible: existing client-side Blaze apps continue to work identically. The server-side additions are opt-in — if you don't import `.html` files from your server entry point, nothing changes.
+The changes are backward-compatible: client-side rendering behaves identically. Two things do change under the hood for every app that uses `templating`. The `blaze` and `spacebars` packages are now part of the server bundle — the `'client'` scoping that previously excluded them had to be lifted for the registry to exist server-side — and `.html` files are compiled for the server as well as the client.
+
+What that means in practice depends on how your app loads files. With explicit imports, a template reaches the server only when you import its `.html` file from your server entry point. In an app that eager-loads — no `imports/` directory — every template is registered on the server at startup; registration populates the `Template` registry and renders nothing, but it does add to server bundle size and startup work.
+
+Rendering itself is always opt-in: nothing is rendered on the server unless you call `Blaze.toHTML()` or `Blaze.toHTMLWithData()` yourself.
 
 ## Known limitations
 
