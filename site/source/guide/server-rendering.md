@@ -51,6 +51,8 @@ Server-rendered templates should be written as pure render functions against exp
 
 The [`static-render` package](https://v3-docs.meteor.com/packages/static-render) provides a higher-level API for pre-rendering routes at server startup (SSG) or at each request (SSR), integrating with `flow-router-extra` and the Meteor boilerplate pipeline.
 
+**This integration requires `ostrio:flow-router-extra`.** `static-render` discovers routes from the FlowRouter route table; without that package it registers no routes and renders nothing. If you use a different router, or no router at all, see [Manual rendering](#manual-rendering-without-static-render) below — `Blaze.toHTML()` itself has no router dependency.
+
 ### SSG — Static Site Generation
 
 For pages whose content doesn't change without a server restart (about, contact, terms). The HTML is rendered once at startup and cached permanently in memory.
