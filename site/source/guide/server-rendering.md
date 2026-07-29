@@ -53,55 +53,9 @@ The [`static-render` package](https://v3-docs.meteor.com/packages/static-render)
 
 **This integration requires `ostrio:flow-router-extra`.** `static-render` discovers routes from the FlowRouter route table; without that package it registers no routes and renders nothing. If you use a different router, or no router at all, see [Manual rendering](#manual-rendering-without-static-render) below — `Blaze.toHTML()` itself has no router dependency.
 
-### SSG — Static Site Generation
+It offers two modes, both declared as route options and both rendering through `Blaze.toHTMLWithData()`: `static: 'ssg'` renders a route once at server startup and caches the result, for pages that change only on redeploy; `static: 'ssr'` renders on each request with fresh data, for pages backed by collections that change.
 
-For pages whose content doesn't change without a server restart (about, contact, terms). The HTML is rendered once at startup and cached permanently in memory.
-
-```js
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
-
-FlowRouter.route('/about', {
-  static: 'ssg',
-  template: 'about',
-  staticData() {
-    return { title: 'About Us' };
-  },
-  staticHead() {
-    return '<title>About | MyShop</title>';
-  },
-});
-```
-
-### SSR — Server-Side Rendering
-
-For pages whose data changes (products, articles, profiles). The HTML is rendered on each request with fresh MongoDB data.
-
-```js
-FlowRouter.route('/products/:slug', {
-  static: 'ssr',
-  template: 'productPage',
-  async staticData(params) {
-    return await Products.findOneAsync({ slug: params.slug });
-  },
-  async staticHead(params) {
-    const p = await Products.findOneAsync({ slug: params.slug });
-    return `<title>${p.title} — $${p.price} | MyShop</title>`;
-  },
-});
-```
-
-When a user edits the product description and saves it, refreshing the page shows the new data — because SSR queries MongoDB at each request.
-
-### SSG vs SSR — which to use?
-
-| | SSG | SSR |
-|---|---|---|
-| Data freshness | Frozen at startup | Fresh per request |
-| Serving cost | Instant (in-memory cache) | Query DB + render per request |
-| Use case | About, pricing, terms | Products, articles, profiles |
-| Data source | Hardcoded or DB at startup | MongoDB at request time |
-
-See the [static-render package docs](https://v3-docs.meteor.com/packages/static-render) for full API reference including parameterized SSG routes (`staticPaths`), cache invalidation, and graceful error handling.
+See the [static-render package docs](https://v3-docs.meteor.com/packages/static-render) for the route options, parameterized SSG routes (`staticPaths`), cache invalidation, and error handling.
 
 ## Manual rendering (without static-render)
 
