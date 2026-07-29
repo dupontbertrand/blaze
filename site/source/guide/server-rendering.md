@@ -123,5 +123,5 @@ The changes are backward-compatible: existing client-side Blaze apps continue to
 
 ## Known limitations
 
-- **Rspack**: requires a small patch to `@meteorjs/rspack` to allow `.html` imports on the server. See the [rspack integration notes](../packages/rspack.md#server-side-html-imports).
+- **Rspack**: server-side `.html` imports rely on the rspack config fix from [meteor#14350](https://github.com/meteor/meteor/pull/14350), which is already included in current Meteor releases. Older versions need that fix applied.
 - **Dynamic templates**: `{{> Template.dynamic template=content}}` is client-only. For server rendering, use direct template inclusion `{{> content}}`.
